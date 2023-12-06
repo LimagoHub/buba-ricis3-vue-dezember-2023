@@ -5,7 +5,7 @@ import { storeToRefs } from "pinia";
 import { useInhaltStore } from "../stores/Inhalt";
 import { ref, onMounted } from "vue";
 
-const { inhalte, loading, error, sending } = storeToRefs(useInhaltStore());
+const { inhalte, inhalteAlt, loading, error, sending } = storeToRefs(useInhaltStore());
 const { fetchInhalte, sendInhalte } = useInhaltStore();
 
 const props = defineProps(["useCase", "ricisInstance", "betrachtungstag"]);
@@ -24,16 +24,24 @@ var saveMethod = (useCase, ricisInstance, betrachtungstag) => {
       alert("Fehler");
     });
 
-  var select = (event) => {
-    alert("hallo");
-    myTarget = event.currentTarget;
-    alert(myTarget.element); // returns 'foo'
-  };
+    
+      
+   
 };
+
+function say( event) {
+  event.preventDefault();
+  if( event.target.tagName === "INPUT") {
+    let oldvalue = event.target.getAttribute("data-oldvalue");
+    event.target.value = oldvalue;  
+  }
+  
+}
 </script>
 
 <template>
   <main>
+    
     <SuccessToastComponent msg="Daten erfolgreich" />
     <p v-if="loading">Loading inhalte...</p>
     <p v-if="error">{{ error.message }}</p>
@@ -83,21 +91,22 @@ var saveMethod = (useCase, ricisInstance, betrachtungstag) => {
     <table
       v-if="inhalte"
       class="table table-striped"
-      v-on:click="alert('Test')"
+      
       id="myTable"
     >
-      <tbody>
-        <template v-for="inhalt in inhalte" :key="inhalt.id">
+      <tbody  @contextmenu="say($event)">
+        <template v-for="(inhalt,index) in inhalte" :key="inhalt.id">
           <tr>
+            <td>{{ index }}</td>
             <td>
               <input
-                v-on:contextmenu="alert('Test')"
+                :data-oldvalue="inhalteAlt[index].referenceRate"
                 v-model="inhalt.referenceRate"
                 type="text"
               />
             </td>
-            <td><input v-model="inhalt.date" type="text" /></td>
-            <td><input v-model="inhalt.value" type="text" /></td>
+            <td><input :data-oldvalue="inhalteAlt[index].date" v-model="inhalt.date" type="text" /></td>
+            <td><input :data-oldvalue="inhalteAlt[index].value" v-model="inhalt.value" type="text" /></td>
           </tr>
         </template>
       </tbody>

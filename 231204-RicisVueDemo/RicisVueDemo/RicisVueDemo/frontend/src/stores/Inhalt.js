@@ -5,6 +5,7 @@ export const useInhaltStore = defineStore({
     id: 'inhalt',
     state: () => ({
         inhalte: [],
+        inhalteAlt: [],
         inhalt: null,
         loading: false,
         sending: false,
@@ -22,6 +23,7 @@ export const useInhaltStore = defineStore({
             try {
                 const res = await axios.get("/api/Inhalte", { params: { 'useCase': usecase, 'ricisInstance': instance, 'betrachtungstag': betrachtungstag }});
                 this.inhalte = res.data;
+                this.inhalteAlt = JSON.parse(JSON.stringify(this.inhalte));
             } catch (error) {
                 this.error = error;
             } finally {
