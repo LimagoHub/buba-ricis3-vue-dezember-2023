@@ -5,21 +5,77 @@ import { RouterLink, RouterView } from "vue-router";
 <template>
   <header>
     <div class="wrapper">
-      <h1>Ricis 3</h1>
-
-      <nav class="navbar navbar-expand-sm">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <RouterLink nav-link to="/">Home</RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink nav-link to="/importuebersicht">Importuebersicht</RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink nav-link to="/about">ApplicationLogs</RouterLink>
-            </li>
-          </ul>
+          <router-link
+            :to="{ name: 'home' }"
+            class="navbar-brand d-flex align-items-center"
+          >
+            <i class="bi bi-box2-heart h1 me-1"></i>
+            <img src="/src/assets/Buba.jpg" />
+            <strong>RICIS</strong>
+          </router-link>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item me-3">
+                <router-link
+                  class="nav-link"
+                  :class="$route.name == 'home' ? 'active' : ''"
+                  aria-current="page"
+                  :to="{ name: 'home' }"
+                >
+                  Home
+                </router-link>
+              </li>
+              <li class="nav-item me-3">
+                <router-link
+                  class="nav-link"
+                  :class="$route.name == 'importuebersicht' ? 'active' : ''"
+                  aria-current="page"
+                  :to="{ name: 'importuebersicht' }"
+                >
+                  Importuebersicht
+                </router-link>
+              </li>
+              <li class="nav-item me-3">
+                <router-link
+                  class="nav-link"
+                  :class="$route.name == 'about' ? 'active' : ''"
+                  aria-current="page"
+                  :to="{ name: 'about' }"
+                >
+                  ApplicationLogs
+                </router-link>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Dropdown link
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     </div>
